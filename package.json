@@ -8,8 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "npm run build && gh-pages -d dist -r santiagosj/github.io",
+    "deploy:subpath": "PUBLIC_BASE=/portfolio/ npm run build && gh-pages -d dist"
   },
   "dependencies": {
     "p5": "^2.2.0",

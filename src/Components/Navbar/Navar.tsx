@@ -33,7 +33,7 @@ const Navar: React.FC<Props> = () => {
                         About
                     </Link>
                     <Link to="/projects" onClick={closeMenu} className="">
-                        Projects
+                      Projects
                     </Link>
                     <Link to="/posts" onClick={closeMenu} className="">
                         Posts
