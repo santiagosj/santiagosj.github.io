@@ -11,6 +11,8 @@
     "deploy": "npm run build && gh-pages -d dist -r git@github.com:santiagosj/santiagosj.github.io.git"
   },
   "dependencies": {
+    "highlight.js": "^11.12.0",
+    "marked": "^18.0.14",
     "p5": "^2.2.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
