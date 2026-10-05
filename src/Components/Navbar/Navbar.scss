@@ -79,6 +79,11 @@
             margin: 1rem 0;
             color: #090909; // Make sure links are visible
             text-decoration: none;
+
+            &.active {
+                text-decoration: line-through;
+                font-style: italic;
+            }
         }
     }
 }
@@ -121,7 +126,8 @@
                     font-weight: 400;
                     font-style: normal;
 
-                    &:hover {
+                    &:hover,
+                    &.active {
                         cursor: pointer;
                         text-decoration: line-through;
                         font-family: 'Courier New', monospace;

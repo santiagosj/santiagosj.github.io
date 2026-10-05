@@ -2,6 +2,27 @@
     position: relative;
 }
 
+.article-progress {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: #000;
+    z-index: 10;
+    margin-bottom: -0.25rem;
+
+    .article-progress-bar {
+        height: 100%;
+        background: linear-gradient(90deg, #c4a7e7, #eda8d8);
+        transition: width 0.15s ease-out;
+    }
+
+    @media (max-width: 1199px) {
+        margin-bottom: 0;
+    }
+}
+
 .post-detail,
 .project-detail {
     max-width: 800px;
@@ -10,6 +31,7 @@
     font-family: 'Courier New', monospace;
     height: calc(100vh - 16.5rem);
     overflow-y: auto;
+    overflow-x: hidden;
     scrollbar-width: none;
     background: rgba(0, 0, 0, 0.77);
     position: relative;
@@ -141,7 +163,9 @@
     @media (max-width: 768px) {
         padding: 1rem;
         height: calc(100vh - 10rem);
-        overflow: auto;
+        overflow-y: auto;
+        overflow-x: hidden;
+        top: 0;
 
         &::-webkit-scrollbar {
             width: 0px;

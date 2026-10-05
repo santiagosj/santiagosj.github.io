@@ -106,17 +106,33 @@ interface Props {
     body: string;
 }
 
-const Markdown: React.FC<Props> = ({ body }) => {
-    const html = renderer.parse(body) as string;
+export const MarkdownContent: React.FC<Props & { onHeadingsMount?: (ids: string[]) => void }> = ({
+    body,
+    onHeadingsMount,
+}) => {
+    const html = React.useMemo(() => renderer.parse(body) as string, [body]);
+    const contentRef = React.useRef<HTMLDivElement>(null);
+
+    React.useEffect(() => {
+        if (!contentRef.current || !onHeadingsMount) return;
+        const headings = Array.from(contentRef.current.querySelectorAll("h2[id]"));
+        const ids = headings.map((h) => h.id);
+        onHeadingsMount(ids);
+    }, [body, html, onHeadingsMount]);
 
     return (
         <div className="markdown">
-            <div className="markdown-body" dangerouslySetInnerHTML={{ __html: html }} />
+            <div className="markdown-body" ref={contentRef} dangerouslySetInnerHTML={{ __html: html }} />
         </div>
     );
 };
 
-export const TableOfContents: React.FC<Props> = ({ body }) => {
+interface TocProps {
+    body: string;
+    activeId?: string;
+}
+
+export const TableOfContents: React.FC<TocProps> = ({ body, activeId }) => {
     const sections = sectionsOf(body);
 
     if (sections.length <= 2) return null;
@@ -127,12 +143,15 @@ export const TableOfContents: React.FC<Props> = ({ body }) => {
             <ol>
                 {sections.map(section => (
                     <li key={section.id}>
-                        <a href={`#${section.id}`}>{section.title}</a>
+                        <a
+                            href={`#${section.id}`}
+                            className={activeId === section.id ? "active" : undefined}
+                        >
+                            {section.title}
+                        </a>
                     </li>
                 ))}
             </ol>
         </nav>
     );
 };
-
-export default Markdown;

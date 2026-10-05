@@ -10,9 +10,7 @@ import PostDetail from "../../Pages/PostDetail/PostDetail";
 
 import "./Router.scss";
 
-type Props = {};
-
-const AppRouter: React.FC<Props> = () => {
+const AppRouter: React.FC = () => {
     return (
      <div className="app-content">
         <Routes>

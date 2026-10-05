@@ -23,14 +23,14 @@ export const P5Canvas: React.FC<P5CanvasProps> = ({ className, style }) => {
     // Definimos el sketch como closure (igual que en Angular)
     const sketch = (p: p5) => {
       let agents: Agent[] = [];
-      let col: any[] = [];
+      let col: number[] = [];
       let fieldIntensity = 10;
       let noiseScale = 500;
-      let radius = 300; // 250
-      let stepSize = 1.5;
+      const radius = 300; // 250
+      const stepSize = 1.5;
       let showText = true;
-      let a = 0.09;
-      let bg = 20;
+      const a = 0.09;
+      const bg = 20;
       let c = 0;
       let lastResetAt = 0;
 
@@ -166,12 +166,12 @@ export const P5Canvas: React.FC<P5CanvasProps> = ({ className, style }) => {
 
       function initColors(alphaValue: number) {
         col = [
-          p.color(`rgba(118, 204, 200,${alphaValue})`),
-          p.color(`rgba(84,121,128, ${alphaValue}) `),
-          p.color(`rgba(69,173,168, ${alphaValue})`),
-          p.color(`rgba(157,224,173, ${alphaValue})`),
-          p.color(`rgba(118, 204, 200,${alphaValue})`),
-          p.color(`rgba(173,216,230,${alphaValue})`),
+          p.color(`rgba(118, 204, 200,${alphaValue})`) as unknown as number,
+          p.color(`rgba(84,121,128, ${alphaValue}) `) as unknown as number,
+          p.color(`rgba(69,173,168, ${alphaValue})`) as unknown as number,
+          p.color(`rgba(157,224,173, ${alphaValue})`) as unknown as number,
+          p.color(`rgba(118, 204, 200,${alphaValue})`) as unknown as number,
+          p.color(`rgba(173,216,230,${alphaValue})`) as unknown as number,
         ];
       }
 

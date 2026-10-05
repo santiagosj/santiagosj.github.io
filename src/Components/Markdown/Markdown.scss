@@ -279,7 +279,7 @@
 
     @media (max-width: 1199px) {
         .markdown-body {
-            padding-bottom: 9rem;
+            padding-bottom: 2rem;
         }
     }
 
@@ -349,14 +349,16 @@
         color: #888;
         text-decoration: none;
 
-        &:hover {
+        &:hover,
+        &.active {
             color: #fff;
         }
     }
 
     @media (max-width: 1199px) {
-        right: 1rem;
-        bottom: 1rem;
-        max-width: calc(100% - 2rem);
+        position: static;
+        margin-top: 1rem;
+        max-width: 100%;
+        width: 100%;
     }
 }
