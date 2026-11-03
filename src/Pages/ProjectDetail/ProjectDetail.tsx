@@ -1,18 +1,21 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { getProject } from "../../content/projects";
+import { getProject, teamClass } from "../../content/projects";
+import { useLanguage } from "../../Components/Language/LanguageContext";
 import { TableOfContents, MarkdownContent } from "../../Components/Markdown/Markdown";
 
 const ProjectDetail: React.FC = () => {
     const { projectId } = useParams<{ projectId: string }>();
+    const { lang } = useLanguage();
     const contentRef = useRef<HTMLDivElement>(null);
     const [progress, setProgress] = useState(0);
     const [activeId, setActiveId] = useState<string>("");
     const [headingIds, setHeadingIds] = useState<string[]>([]);
 
-    const project = getProject(projectId || "");
+    const project = getProject(projectId || "", lang);
 
     const handleHeadingsMount = useCallback((ids: string[]) => {
+        setActiveId("");
         setHeadingIds(ids);
     }, []);
 
@@ -101,7 +104,7 @@ const ProjectDetail: React.FC = () => {
                     <h1 className="ubuntu-bold">{project.meta.title}</h1>
                     <div className="project-meta">
                         <span className="project-category">{project.meta.category}</span>
-                        <span className="project-team">{project.meta.team}</span>
+                        <span className={`project-team ${teamClass(project.meta.team)}`}>{project.meta.team}</span>
                         {project.meta.featured && <span className="featured-badge">Featured</span>}
                         {project.meta.timeline && <span className="project-timeline">{project.meta.timeline}</span>}
                     </div>

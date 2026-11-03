@@ -143,6 +143,28 @@
                     font-size: 0.7rem;
                     white-space: nowrap;
                     font-family: 'Courier New', monospace;
+
+                    &.team-red {
+                        color: #ff2b49;
+                        border-color: rgba(255, 43, 73, 0.45);
+
+                        &:hover {
+                            background: rgba(255, 43, 73, 0.1);
+                            border-color: #ff2b49;
+                            color: #fff;
+                        }
+                    }
+
+                    &.team-blue {
+                        color: #00f0ff;
+                        border-color: rgba(0, 240, 255, 0.45);
+
+                        &:hover {
+                            background: rgba(0, 240, 255, 0.1);
+                            border-color: #00f0ff;
+                            color: #fff;
+                        }
+                    }
                 }
             }
 

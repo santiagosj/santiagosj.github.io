@@ -1,6 +1,6 @@
-import { byDateDesc, flag, loadCollection, tagList, text, uniqueSorted } from "./collection";
+import { byDateDesc, flag, loadCollection, localize, tagList, text, uniqueSorted } from "./collection";
 import type { FrontmatterData } from "./collection";
-import type { Post, PostMeta } from "./types";
+import type { Locale, Post, PostMeta } from "./types";
 
 const sources = import.meta.glob("./posts/*.md", {
     query: "?raw",
@@ -17,12 +17,15 @@ const toMeta = (data: FrontmatterData): PostMeta => ({
     date: text(data.date),
 });
 
-export const posts: Post[] = loadCollection("posts", sources, toMeta)
-    .sort((a, b) => byDateDesc(a.meta, b.meta));
+const all: Post[] = loadCollection("posts", sources, toMeta);
 
-export const postCategories: string[] = uniqueSorted(posts.map(post => post.meta.category));
+export const getPosts = (lang: Locale): Post[] =>
+    localize(all, lang).sort((a, b) => byDateDesc(a.meta, b.meta));
 
-export const getPost = (slug: string): Post | undefined =>
-    posts.find(post => post.slug === slug);
+export const getPostCategories = (lang: Locale): string[] =>
+    uniqueSorted(getPosts(lang).map(post => post.meta.category));
 
-export type { Post, PostMeta };
+export const getPost = (slug: string, lang: Locale): Post | undefined =>
+    localize(all, lang).find(post => post.slug === slug);
+
+export type { Locale, Post, PostMeta };

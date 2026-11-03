@@ -25,7 +25,7 @@
 
 .post-detail,
 .project-detail {
-    max-width: 800px;
+    max-width: 850px;
     padding: 2rem;
     color: #c4c4c4;
     font-family: 'Courier New', monospace;
@@ -84,6 +84,30 @@
         font-size: 0.8rem;
         font-weight: 400;
         font-family: 'Courier New', monospace;
+    }
+
+    .project-team {
+        &.team-red {
+            color: #ff2b49;
+            border-color: rgba(255, 43, 73, 0.45);
+
+            &:hover {
+                background: rgba(255, 43, 73, 0.1);
+                border-color: #ff2b49;
+                color: #fff;
+            }
+        }
+
+        &.team-blue {
+            color: #00f0ff;
+            border-color: rgba(0, 240, 255, 0.45);
+
+            &:hover {
+                background: rgba(0, 240, 255, 0.1);
+                border-color: #00f0ff;
+                color: #fff;
+            }
+        }
     }
 
     .post-date,

@@ -1,15 +1,23 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { posts, postCategories } from "../../content/posts";
+import { getPostCategories, getPosts } from "../../content/posts";
+import { useLanguage } from "../../Components/Language/LanguageContext";
+import LangSwitch from "../../Components/Language/LangSwitch";
 import "./Posts.scss";
 
-const Posts: React.FC = () => {
-    const categories = ["All", ...postCategories];
-    const [selectedCategory, setSelectedCategory] = React.useState("All");
+const ALL = "All";
 
-    const filteredPosts = selectedCategory === "All"
+const Posts: React.FC = () => {
+    const { lang } = useLanguage();
+    const categories = [ALL, ...getPostCategories(lang)];
+    const [selectedCategory, setSelectedCategory] = React.useState(ALL);
+
+    const activeCategory = categories.includes(selectedCategory) ? selectedCategory : ALL;
+    const posts = getPosts(lang);
+
+    const filteredPosts = activeCategory === ALL
         ? posts
-        : posts.filter(post => post.meta.category === selectedCategory);
+        : posts.filter(post => post.meta.category === activeCategory);
 
     return (
         <div className="posts-content">
@@ -21,12 +29,13 @@ const Posts: React.FC = () => {
                 {categories.map(category => (
                     <button
                         key={category}
-                        className={`category-btn ${selectedCategory === category ? 'active' : ''}`}
+                        className={`category-btn ${activeCategory === category ? 'active' : ''}`}
                         onClick={() => setSelectedCategory(category)}
                     >
                         {category}
                     </button>
                 ))}
+                <LangSwitch />
             </div>
             <div className="posts-grid">
                 {filteredPosts.map(({ slug, meta }) => (

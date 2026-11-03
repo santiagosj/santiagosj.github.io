@@ -1,15 +1,23 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { projects, projectTeams } from "../../content/projects";
+import { getProjectTeams, getProjects, teamClass } from "../../content/projects";
+import { useLanguage } from "../../Components/Language/LanguageContext";
+import LangSwitch from "../../Components/Language/LangSwitch";
 import "./Projects.scss";
 
-const Projects: React.FC = () => {
-    const teams = ["All", ...projectTeams];
-    const [selectedTeam, setSelectedTeam] = React.useState("All");
+const ALL = "All";
 
-    const filteredProjects = selectedTeam === "All"
+const Projects: React.FC = () => {
+    const { lang } = useLanguage();
+    const teams = [ALL, ...getProjectTeams(lang)];
+    const [selectedTeam, setSelectedTeam] = React.useState(ALL);
+
+    const activeTeam = teams.includes(selectedTeam) ? selectedTeam : ALL;
+    const projects = getProjects(lang);
+
+    const filteredProjects = activeTeam === ALL
         ? projects
-        : projects.filter(project => project.meta.team === selectedTeam);
+        : projects.filter(project => project.meta.team === activeTeam);
 
     return (
         <div className="projects-content">
@@ -21,12 +29,13 @@ const Projects: React.FC = () => {
                 {teams.map(team => (
                     <button
                         key={team}
-                        className={`category-btn ${selectedTeam === team ? 'active' : ''}`}
+                        className={`category-btn ${activeTeam === team ? 'active' : ''}`}
                         onClick={() => setSelectedTeam(team)}
                     >
                         {team}
                     </button>
                 ))}
+                <LangSwitch />
             </div>
             <div className="projects-grid">
                 {filteredProjects.map(({ slug, meta }) => (
@@ -35,7 +44,7 @@ const Projects: React.FC = () => {
 
                         <div className="project-header">
                             <h3 className="ubuntu-medium">{meta.title}</h3>
-                            <span className="project-category">{meta.team}</span>
+                            <span className={`project-category ${teamClass(meta.team)}`}>{meta.team}</span>
                         </div>
 
                         <p className="project-description">{meta.description}</p>

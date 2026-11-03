@@ -1,18 +1,21 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getPost } from "../../content/posts";
+import { useLanguage } from "../../Components/Language/LanguageContext";
 import { TableOfContents, MarkdownContent } from "../../Components/Markdown/Markdown";
 
 const PostDetail: React.FC = () => {
     const { postId } = useParams<{ postId: string }>();
+    const { lang } = useLanguage();
     const contentRef = useRef<HTMLDivElement>(null);
     const [progress, setProgress] = useState(0);
     const [activeId, setActiveId] = useState<string>("");
     const [headingIds, setHeadingIds] = useState<string[]>([]);
 
-    const post = getPost(postId || "");
+    const post = getPost(postId || "", lang);
 
     const handleHeadingsMount = useCallback((ids: string[]) => {
+        setActiveId("");
         setHeadingIds(ids);
     }, []);
 

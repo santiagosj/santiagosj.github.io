@@ -1,5 +1,17 @@
 # AGENTS.md — Portfolio
 
+## Working method (hola-ai)
+
+Built with the [hola-ai](../hola-ai) method: `/backlog` → `/story` → `/pair`. Principles:
+don't invent (ask what's missing), the simplest thing that works, slice vertically and small,
+suggest don't decide, explicit checkpoints, and **never commit without being asked**.
+
+Caveat for this repo: there are **no tests** (see Notable quirks), so `/pair`'s red→green TDD
+cycle doesn't apply to UI/content work — verify in the browser instead (`npm run dev`). The
+discipline that *does* carry is the content template + honesty rules under "Writing posts and
+projects": reject-with-reason, state the limits, never a real host. Full method in
+`../hola-ai/skills/`.
+
 ## Commands
 
 | Action | Command |
@@ -18,6 +30,7 @@
 - **React Compiler** enabled via `babel-plugin-react-compiler` in `vite.config.ts`. Impacts dev/build perf.
 - **Navbar filename is `Navar.tsx`** (typo). Component imported as `Navar` in `AppHolder.tsx`. Don't rename without updating the import.
 - **Router:** 6 routes — `/`, `/home`, `/about`, `/projects`, `/projects/:projectId`, `/posts`, `/posts/:postId`.
+- **EN/ES content switch.** `LanguageProvider` (`Components/Language/Language.tsx`, mounted in `AppHolder.tsx`) holds the locale; `useLanguage()` (`LanguageContext.tsx`) exposes `{ lang, setLang }`. Pages call `getPosts(lang)` / `getProject(slug, lang)` etc. and get EN fallback automatically when an `.es.md` is missing. The `EN | ES` toggle is `LangSwitch.tsx`, rendered once per list page inside the `.category-filter` bar of `Posts` and `Projects` (right-aligned, not in the navbar, not on detail pages). Hardcoded UI chrome ("Read", "Featured", "All", "Back to Posts") stays English by decision.
 
 ## Architecture
 
@@ -31,17 +44,18 @@ src/
     Router/         # Route definitions
     Canvas/         # p5.js animated background
     Markdown/       # Markdown article renderer (marked + highlight.js)
+    Language/       # LanguageContext.tsx (locale state + useLanguage), Language.tsx (provider), LangSwitch.tsx (EN|ES toggle)
     Breadcrumb/     # Breadcrumb.tsx (unused?)
   content/          # Long-form content for posts AND projects (see Writing posts)
     _TEMPLATE.md         # Article skeleton — copy this, don't write from scratch
     _TEMPLATE.project.md # Same eight sections, mapped to a build log
     frontmatter.ts  # Minimal YAML frontmatter parser
-    collection.ts   # Shared glob loading + frontmatter coercion helpers
-    posts.ts        # Loads ./posts/*.md via import.meta.glob, sorted by date
-    projects.ts     # Loads ./projects/*.md the same way
-    types.ts        # PostMeta / Post / ProjectMeta / Project
-    posts/*.md      # One file per post
-    projects/*.md   # One file per project
+    collection.ts   # Shared glob loading, .es suffix parsing, locale fallback, frontmatter coercion
+    posts.ts        # getPosts(lang) / getPost(slug, lang) via import.meta.glob, sorted by date
+    projects.ts     # getProjects(lang) / getProject(slug, lang) the same way
+    types.ts        # PostMeta / Post / ProjectMeta / Project / Locale
+    posts/*.md      # One file per post; Spanish version = <slug>.es.md
+    projects/*.md   # One file per project; same .es.md rule
   styles/
     article.scss    # Shared chrome for .post-detail / .project-detail (imported by index.scss)
 ```
@@ -55,6 +69,13 @@ src/
 
 - One markdown file per item, in `src/content/posts/` or `src/content/projects/`. The slug is the
   filename and the URL, so renaming a file breaks a published link.
+- **Spanish version:** a sibling `<slug>.es.md` next to the English `<slug>.md` (17 pairs currently
+  exist — every item is translated). `collection.ts` strips the `.es` suffix, so the slug and URL
+  stay identical in both languages. Translate `title`, `description`, `category`, `timeline` and the
+  body; keep `tags`, `team` (`Red Team`/`Blue Team`), `date`, `featured` and URLs byte-identical, and
+  paste fenced code blocks verbatim. Use `> **En pocas palabras**` instead of `> **Plain terms**`.
+  Keep the same `##` section count/order (the TOC is built from them). A missing `.es.md` falls
+  back to the English file — but prefer always writing one.
 - Post frontmatter: `title`, `description`, `category`, `tags`, `featured`, `date` (`YYYY-MM-DD`).
   Project frontmatter adds `team` (`Red Team` / `Blue Team`), `timeline`, `githubUrl`, `liveUrl`.
   Types live in `content/types.ts`. `tags` accepts a YAML list or a comma-separated string.

@@ -1,6 +1,6 @@
-import { byDateDesc, flag, loadCollection, optionalText, tagList, text, uniqueSorted } from "./collection";
+import { byDateDesc, flag, loadCollection, localize, optionalText, tagList, text, uniqueSorted } from "./collection";
 import type { FrontmatterData } from "./collection";
-import type { Project, ProjectMeta } from "./types";
+import type { Locale, Project, ProjectMeta } from "./types";
 
 const sources = import.meta.glob("./projects/*.md", {
     query: "?raw",
@@ -21,12 +21,18 @@ const toMeta = (data: FrontmatterData): ProjectMeta => ({
     liveUrl: optionalText(data.liveUrl),
 });
 
-export const projects: Project[] = loadCollection("projects", sources, toMeta)
-    .sort((a, b) => byDateDesc(a.meta, b.meta));
+const all: Project[] = loadCollection("projects", sources, toMeta);
 
-export const projectTeams: string[] = uniqueSorted(projects.map(project => project.meta.team));
+export const getProjects = (lang: Locale): Project[] =>
+    localize(all, lang).sort((a, b) => byDateDesc(a.meta, b.meta));
 
-export const getProject = (slug: string): Project | undefined =>
-    projects.find(project => project.slug === slug);
+export const getProjectTeams = (lang: Locale): string[] =>
+    uniqueSorted(getProjects(lang).map(project => project.meta.team));
 
-export type { Project, ProjectMeta };
+export const getProject = (slug: string, lang: Locale): Project | undefined =>
+    localize(all, lang).find(project => project.slug === slug);
+
+export const teamClass = (team: string): string =>
+    team === "Red Team" ? "team-red" : team === "Blue Team" ? "team-blue" : "";
+
+export type { Locale, Project, ProjectMeta };
