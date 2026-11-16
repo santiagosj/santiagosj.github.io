@@ -69,7 +69,7 @@ src/
 
 - One markdown file per item, in `src/content/posts/` or `src/content/projects/`. The slug is the
   filename and the URL, so renaming a file breaks a published link.
-- **Spanish version:** a sibling `<slug>.es.md` next to the English `<slug>.md` (17 pairs currently
+- **Spanish version:** a sibling `<slug>.es.md` next to the English `<slug>.md` (10 pairs currently
   exist — every item is translated). `collection.ts` strips the `.es` suffix, so the slug and URL
   stay identical in both languages. Translate `title`, `description`, `category`, `timeline` and the
   body; keep `tags`, `team` (`Red Team`/`Blue Team`), `date`, `featured` and URLs byte-identical, and
@@ -97,8 +97,9 @@ src/
 - Blockquotes are rendered as the "plain terms" callout. Fenced code blocks are highlighted by
   `highlight.js`; only the languages registered in `Components/Markdown/Markdown.tsx` are available,
   and anything else falls back to `plaintext`.
-- The 6 `htb-*` posts and all 8 project pages currently hold their original two-line descriptions.
-  They are placeholders pending real write-ups — do not treat them as finished.
+- All 8 project pages currently hold their original two-line descriptions. They are placeholders
+  pending real write-ups — do not treat them as finished. (The 6 `htb-*` posts were removed for the
+  same reason: they were placeholders with no real write-up behind them.)
 
 ## Style conventions
 
