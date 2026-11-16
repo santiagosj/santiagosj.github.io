@@ -2,7 +2,7 @@
 
 **Estado:** en pausa
 **Actualizado:** 2026-11-16
-**Rama:** gh-pages @ f82af37 (más el commit de limpieza de htb-*)
+**Rama:** gh-pages (local) → origin/source @ bd534a8
 **Sin commitear:** nada (todo commiteado para clonar en otra máquina)
 
 ## Objetivo
@@ -28,6 +28,6 @@ Escribir el primer proyecto real: copiar `src/content/projects/_TEMPLATE.project
 - [x] Eliminar posts placeholder `htb-*` y actualizar `AGENTS.md`
 
 ## Notas
-- El código fuente vive en la rama local `gh-pages`, que diverge de `main` (y `main` está desactualizada).
+- El código fuente está en `origin/source` (rama local `gh-pages`); para clonarlo: `git clone -b source git@github.com:santiagosj/portfolio.git`. Diverge de `main`, que está desactualizada.
   `origin/gh-pages` contiene el build compilado (commits "Updates"), no el código fuente.
 - `npm run deploy` publica `dist` en el repo `santiagosj.github.io`, no en este.
