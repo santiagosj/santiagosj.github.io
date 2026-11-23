@@ -69,15 +69,15 @@ src/
 
 - One markdown file per item, in `src/content/posts/` or `src/content/projects/`. The slug is the
   filename and the URL, so renaming a file breaks a published link.
-- **Spanish version:** a sibling `<slug>.es.md` next to the English `<slug>.md` (10 pairs currently
+- **Spanish version:** a sibling `<slug>.es.md` next to the English `<slug>.md` (11 pairs currently
   exist — every item is translated). `collection.ts` strips the `.es` suffix, so the slug and URL
   stay identical in both languages. Translate `title`, `description`, `category`, `timeline` and the
-  body; keep `tags`, `team` (`Red Team`/`Blue Team`), `date`, `featured` and URLs byte-identical, and
+  body; keep `tags`, `team` (`Red Team`/`Blue Team`/`Purple Team`), `date`, `featured` and URLs byte-identical, and
   paste fenced code blocks verbatim. Use `> **En pocas palabras**` instead of `> **Plain terms**`.
   Keep the same `##` section count/order (the TOC is built from them). A missing `.es.md` falls
   back to the English file — but prefer always writing one.
 - Post frontmatter: `title`, `description`, `category`, `tags`, `featured`, `date` (`YYYY-MM-DD`).
-  Project frontmatter adds `team` (`Red Team` / `Blue Team`), `timeline`, `githubUrl`, `liveUrl`.
+  Project frontmatter adds `team` (`Red Team` / `Blue Team` / `Purple Team`; a new value also needs a class in `teamClass` + both team SCSS blocks), `timeline`, `githubUrl`, `liveUrl`.
   Types live in `content/types.ts`. `tags` accepts a YAML list or a comma-separated string.
 - Both collections use the same eight `##` sections. Articles start from `_TEMPLATE.md`:
   The question → The target model → The surface criteria → The inventory →
@@ -97,8 +97,8 @@ src/
 - Blockquotes are rendered as the "plain terms" callout. Fenced code blocks are highlighted by
   `highlight.js`; only the languages registered in `Components/Markdown/Markdown.tsx` are available,
   and anything else falls back to `plaintext`.
-- All 8 project pages currently hold their original two-line descriptions. They are placeholders
-  pending real write-ups — do not treat them as finished. (The 6 `htb-*` posts were removed for the
+- `secure-k8s-lab` (EN + ES) still holds its original two-line description. It is a placeholder
+  pending a real write-up — do not treat it as finished. (The 6 `htb-*` posts were removed for the
   same reason: they were placeholders with no real write-up behind them.)
 
 ## Style conventions

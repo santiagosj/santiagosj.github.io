@@ -33,6 +33,6 @@ export const getProject = (slug: string, lang: Locale): Project | undefined =>
     localize(all, lang).find(project => project.slug === slug);
 
 export const teamClass = (team: string): string =>
-    team === "Red Team" ? "team-red" : team === "Blue Team" ? "team-blue" : "";
+    team === "Red Team" ? "team-red" : team === "Blue Team" ? "team-blue" : team === "Purple Team" ? "team-purple" : "";
 
 export type { Locale, Project, ProjectMeta };

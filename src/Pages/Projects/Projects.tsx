@@ -23,7 +23,7 @@ const Projects: React.FC = () => {
         <div className="projects-content">
 
             <h2 className="ubuntu-bold">Projects</h2>
-            <p className="ubuntu-regular">Red Team · Blue Team · Security Projects</p>
+            <p className="ubuntu-regular">Red Team · Blue Team · Purple Team · Security Projects</p>
 
             <div className="category-filter">
                 {teams.map(team => (

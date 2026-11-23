@@ -108,6 +108,17 @@
                 color: #fff;
             }
         }
+
+        &.team-purple {
+            color: #c4a7e7;
+            border-color: rgba(196, 167, 231, 0.45);
+
+            &:hover {
+                background: rgba(196, 167, 231, 0.1);
+                border-color: #c4a7e7;
+                color: #fff;
+            }
+        }
     }
 
     .post-date,
